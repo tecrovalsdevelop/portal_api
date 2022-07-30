@@ -5,28 +5,71 @@ const Route = use('Route')
 Route.group(() => {
 
 
+
+    //---------------------- Noticiais -----------------------------------------------------
+
+    Route.post('portal-logs', 'PortalLogController.logsPortal').middleware(['connection'])
+    Route.get('getportalsobre', 'PortalSobreController.index').middleware(['connection'])
+
+    Route.get('getportalnoticias', 'PortalNoticiaController.getNoticias').middleware(['connection'])
+    Route.get('getportalprodutos', 'PortalProdutoController.getProdutos').middleware(['connection'])
+    Route.get('getportalservicos', 'PortalProdutoController.getServicos').middleware(['connection'])
+    Route.get('getportalprodutos', 'PortalProdutoController.index').middleware(['connection'])
+    Route.get('getportalclientes', 'PortalClienteController.index').middleware(['connection'])
+    Route.get('getportalparceiros', 'PortalParceiroController.index').middleware(['connection'])
+    Route.get('getportalcontactos', 'PortalContactoController.index').middleware(['connection'])
+    Route.get('getportalmensagens', 'PortalMensagenController.index').middleware(['connection'])
+
+    Route.get('getportalcurso/:id', 'PortalCursoController.show').middleware(['connection'])
+    Route.get('getportalproduto/:id', 'PortalProdutoController.show').middleware(['connection'])
+    Route.get('getportalservico/:id', 'PortalServicoController.show').middleware(['connection'])
+    Route.get('getportalnoticia/:id', 'PortalNoticiaController.buscarNoticiaId').middleware(['connection'])
+
+    Route.get('getNoticiasPopulares', 'PortalNoticiaController.getNoticiasPopulares').middleware(['connection'])
+
+    Route.get('getPortalPerguntasFrequentes', 'PortalPerguntasFrequenteController.getPortalPerguntasFrequentes').middleware(['connection'])
+
+
+    
+    Route.get('getPortalEventos', 'PortalEventoController.getPortalEvento').middleware(['connection'])
+    
+    Route.get('getPortalInstituicao', 'PortalInstituicoeController.getPortalInstituicao').middleware(['connection'])
+    
+    Route.get('getPortalHistorial', 'PortalHistoriaController.getPortalHistorial').middleware(['connection'])
+    Route.get('getPortalCeoDiscurso', 'PortalCeoDiscursoController.getPortalCeoDiscurso').middleware(['connection'])
+    Route.get('getPortalContacto', 'PortalContactoController.getPortalContacto').middleware(['connection'])
+
+    Route.get('getPortalProfissionais', 'PortalProfissionaiController.getPortalProfissionais').middleware(['connection'])
+
+    
+    
+    Route.resource('portal-cursos', 'PortalCursoController').middleware(['connection']).apiOnly()
+    Route.resource('portal-noticias', 'PortalNoticiaController').middleware(['connection']).apiOnly()
+    Route.resource('portal-noticias-itens', 'PortalNoticiaItenController').middleware(['connection']).apiOnly()
+
+    Route.resource('portal-produtos', 'PortalProdutoController').middleware(['connection']).apiOnly()
+    Route.resource('portal-clientes', 'PortalClienteController').middleware(['connection']).apiOnly()
+    Route.resource('portal-parceiros', 'PortalParceiroController').middleware(['connection']).apiOnly()
+    Route.resource('portal-sobre', 'PortalSobreController').middleware(['connection']).apiOnly()
+    Route.resource('portal-contactos', 'PortalContactoController').middleware(['connection']).apiOnly()
+    Route.resource('portal-mensagens', 'PortalMensagenController').middleware(['connection']).apiOnly()
+
+
+
+    //--------------------outros ----------------------------------------------
+
+
+
     Route.get('validacao/:model', 'ValidacaoController.validar')
-
     Route.post('loginbase', 'UserController.login')
-
-
     Route.get('dasboard-bolseiro-renovacao-instituicao', 'BaseLogController.dasboardBolseiroRenovacaoInstituicao')
-
-
-
-
     Route.get('dasboard-candidatura-nivel-academico', 'BaseLogController.dasboardCandidaturaNivel')
     Route.get('dasboard-candidatura-provincia', 'BaseLogController.dasboardCandidaturaProvincia')
     Route.get('dasboard-candidatura-provincia-ies', 'BaseLogController.dasboardCandidaturaProvinciaIes')
-
-
     Route.get('dasboard', 'BaseLogController.dasboard').middleware('auth')
     Route.post('teste', 'BaseLogController.teste').middleware('auth')
-
-
     Route.get('dasboardanexos', 'BaseLogController.dasboardAnexos').middleware('auth')
     Route.get('dasboardanexositens', 'BaseLogController.dasboardAnexosItens').middleware('auth')
-
     Route.get('dasboardusers', 'BaseLogController.dasboardUsers').middleware('auth')
     Route.get('dasboardcandidaturasinterna', 'BaseLogController.dasboardCandidaturaInterna').middleware('auth')
     Route.get('dasboardcandidaturasexterna', 'BaseLogController.dasboardCandidaturaExterna').middleware('auth')
@@ -43,7 +86,7 @@ Route.group(() => {
     Route.post('login-bolseiro-inagbe', 'UserController.loginBolseiroInagbe')
 
     Route.post('login-candidato', 'UserController.loginCandidato')
-    Route.post('criar-conta-candidatura', 'UserController.criarContaCandidato')
+    Route.post('criar-conta', 'UserController.criarConta')
 
 
     Route.post('login-bolseiro', 'UserController.loginBolseiro')
@@ -85,7 +128,7 @@ Route.group(() => {
 
     Route.get('bolseiroInternorenovacaoies', 'EduBolseiroInternoController.bolseiroInternorenovacaoies')
 
-    Route.get('bolseirorenovacaofiltro', 'EduBolseiroRenovacoeController.bolseirorenovacaofiltro') 
+    Route.get('bolseirorenovacaofiltro', 'EduBolseiroRenovacoeController.bolseirorenovacaofiltro')
 
     //---------------------- Noticiais -----------------------------------------------------
     Route.resource('noticias-gerais', 'NoticiaController').apiOnly()
@@ -160,8 +203,8 @@ Route.group(() => {
 
     Route.resource('bolsas', 'EduBolsaController').middleware('auth').apiOnly()
     Route.get('listagemBolsa', 'EduBolsaController.listagemBolsa').middleware('auth')
-   //Route.resource('bolsa-alterar/', 'EduBolsaController.update').middleware('auth').apiOnly()
-   //Route.post('bolsa-cadastrar', 'EduBolsaController.store').middleware('auth')
+    //Route.resource('bolsa-alterar/', 'EduBolsaController.update').middleware('auth').apiOnly()
+    //Route.post('bolsa-cadastrar', 'EduBolsaController.store').middleware('auth')
 
     //rotas validacao
 
@@ -249,20 +292,20 @@ Route.group(() => {
 
 
 
-      Route.post('salvar-reclamacao', 'EduReclamacoeController.store')
+    Route.post('salvar-reclamacao', 'EduReclamacoeController.store')
 
-      Route.get('buscarReclamacoes','EduReclamacoeController.buscarReclamaccoes').middleware('auth')
+    Route.get('buscarReclamacoes', 'EduReclamacoeController.buscarReclamaccoes').middleware('auth')
 
-      Route.resource('reclamacoes', 'EduReclamacoeController').middleware('auth').apiOnly()
+    Route.resource('reclamacoes', 'EduReclamacoeController').middleware('auth').apiOnly()
 
-      Route.post('actualizar-reclamacao-estudante', 'EduReclamacoeController.actualizarReclamacaoEstudante').middleware('auth')
-      Route.post('actualizar-reclamacao-inagbe', 'EduReclamacoeController.actualizarReclamacaoInagbe')
+    Route.post('actualizar-reclamacao-estudante', 'EduReclamacoeController.actualizarReclamacaoEstudante').middleware('auth')
+    Route.post('actualizar-reclamacao-inagbe', 'EduReclamacoeController.actualizarReclamacaoInagbe')
 
-      Route.post('salvar-confirmacao-validacao-bolseiro', 'EduCandidaturaController.BolseiroConfirmaValidacaoDoContrato')
+    Route.post('salvar-confirmacao-validacao-bolseiro', 'EduCandidaturaController.BolseiroConfirmaValidacaoDoContrato')
 
 
 
-      Route.get('resultadocbei/:bi', 'EduCandidaturaController.resultadoCandidaturaInterna').middleware('auth')
+    Route.get('resultadocbei/:bi', 'EduCandidaturaController.resultadoCandidaturaInterna').middleware('auth')
 
     Route.resource('unidadesorganica', 'EduUnidadeOrganicaController').middleware('auth').apiOnly()
     Route.resource('educursos', 'EduCursoController').middleware('auth').apiOnly() //CRUD
@@ -349,7 +392,7 @@ Route.group(() => {
     Route.post('candidaturainternabolsasfiltro', 'EduCandidaturaInternaController.indexcandidaturabolsafiltro').middleware('auth')
     Route.get('candidaturainternabolsas/:bolsa_id/estado/:estado_id', 'EduCandidaturaInternaController.indexcandidaturabolsa').middleware('auth')
     Route.get('candidaturainternabolsas/:bolsa_id/estado/:estado_id/bi/:bi/', 'EduCandidaturaInternaController.indexcandidaturabolsaBi').middleware('auth')
-        // Route.get('candidaturainternavalidar/:bolsa_id/estado/:estado_id', 'EduCandidaturaInternaController.indexcandidaturabolsa').middleware('auth')
+    // Route.get('candidaturainternavalidar/:bolsa_id/estado/:estado_id', 'EduCandidaturaInternaController.indexcandidaturabolsa').middleware('auth')
     Route.get('candidaturainternavalidar/:user_id/bolsa/:bolsa_id/estado/:estado_id', 'EduCandidaturaInternaController.indexcandidaturabolsavalidacao').middleware('auth')
     Route.get('candidaturainternavalidar/:user_id/bolsa/:bolsa_id/estado/:estado_id/bi/:bi/', 'EduCandidaturaInternaController.indexcandidaturabolsavalidacaoBi').middleware('auth')
     Route.get('candidaturainternavalidar/:user_id/bolsa/:bolsa_id/estado/:estado_id/bi/:bi/nome/:nome', 'EduCandidaturaInternaController.indexcandidaturabolsavalidacao').middleware('auth')
@@ -362,7 +405,7 @@ Route.group(() => {
     Route.post('candidaturaexternabolsasfiltro', 'EduCandidaturaExternaController.indexcandidaturabolsafiltro').middleware('auth')
     Route.get('candidaturaexternabolsas/:bolsa_id/estado/:estado_id', 'EduCandidaturaExternaController.indexcandidaturabolsa').middleware('auth')
     Route.get('candidaturaexternabolsas/:bolsa_id/estado/:estado_id/bi/:bi/', 'EduCandidaturaExternaController.indexcandidaturabolsaBi').middleware('auth')
-        // Route.get('candidaturaexternavalidar/:bolsa_id/estado/:estado_id', 'EduCandidaturaExternaController.indexcandidaturabolsa').middleware('auth')
+    // Route.get('candidaturaexternavalidar/:bolsa_id/estado/:estado_id', 'EduCandidaturaExternaController.indexcandidaturabolsa').middleware('auth')
     Route.get('candidaturaexternavalidar/:user_id/bolsa/:bolsa_id/estado/:estado_id', 'EduCandidaturaExternaController.indexcandidaturabolsavalidacao').middleware('auth')
     Route.get('candidaturaexternavalidar/:user_id/bolsa/:bolsa_id/estado/:estado_id/bi/:bi/', 'EduCandidaturaExternaController.indexcandidaturabolsavalidacaoBi').middleware('auth')
     Route.get('candidaturaexternavalidar/:user_id/bolsa/:bolsa_id/estado/:estado_id/bi/:bi/nome/:nome', 'EduCandidaturaExternaController.indexcandidaturabolsavalidacao').middleware('auth')
@@ -452,7 +495,7 @@ Route.group(() => {
     Route.get('veranexo/:anexo_item/documento/:id/download', 'BaseAnexoController.verAnexo')
     Route.get('verAnexoonline/:anexo_item/documento/:id/download', 'BaseAnexoController.verAnexoonline')
 
-    
+
     Route.get('getpdfbyte/:anexo_item/documento/:id/download', 'BaseAnexoController.getPdfByte')
 
 
@@ -461,11 +504,11 @@ Route.group(() => {
 
     Route.post('salvar-anexo-bolseiro-retfop', 'EduRetfopBolseiroController.salvarAnexoBolseiroRetfop')
 
- 
+
     Route.get('abrirficheiroretfop', 'BaseAnexoController.abrirficheiroretfop')
     Route.get('downloadficheiroretfop', 'BaseAnexoController.downloadficheiroretfop')
 
-    
+
 
     Route.get('downloadAnexos/:anexo_item/documento/:id/download', 'BaseAnexoController.downloadAnexos').middleware('auth')
     Route.get('candidaturas/:id/ficha', 'EduCandidaturaController.imprimirFicha').middleware('auth')

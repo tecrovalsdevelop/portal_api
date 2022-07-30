@@ -58,7 +58,7 @@ class UserController {
                 .orWhere('telefone', 'like', '%' + paginate.email_telefone + '%')
                 .orWhere('username', 'like', '%' + paginate.email_telefone + '%')
 
-            .paginate(page, size);
+                .paginate(page, size);
 
             return ResponseHelper.getOnlyDataResponse(users)
         } catch (error) {
@@ -119,6 +119,7 @@ class UserController {
             user_id = user.id
 
 
+            NodeMailerHelper.enviarEmailContaCriada(data_user);
             this.registarLog(user.email, "", "user", 'novasenha', "1", "-", "-", "novas senha com sucesso");
             return ResponseHelper.getSuccessResponse("Informação Salva com sucesso", user)
         } catch (err) {
@@ -168,39 +169,22 @@ class UserController {
         }
     }
 
-    async criarContaCandidato({ request, response }) {
+    async criarConta({ request, response }) {
         try {
-
-            //    return ResponseHelper.getErrorResponse("Está encerrada a candidatura de Bolsa de Estudo Interna para o ano lectivo 2021/2022 ! ...")
-
-            let data_all = request.all();
             let data_user = request.only(requestFields);
             let email_exist = await this.findUserByEmail(data_user.email)
-
             let user = false;
-            let user_result = ""
-            let user_id = 0
-
-            //console.log("-------------------------------------------------")
-            //console.log(data_user.email)
+            let user_result = "" 
             if (email_exist) {
-                //console.log('   está conta de email ja existe');
                 return ResponseHelper.getErrorResponse("está conta email ja existe", email_exist.email)
             }
-
-
             user = await User.create(data_user);
 
-            //console.log("conta criada com sucesso ....")
-            //console.log("-------------------------------------------------")
-            //  NodeMailerHelper.enviarEmailContaCriadaCandidato(user, data_all);
-
-
+            NodeMailerHelper.enviarEmailContaCriadaCandidato(user, data_user);
             //console.log("email conta criada para candidatura  enviado com sucesso ....")
-
             return ResponseHelper.getSuccessResponse("Conta Criada Com sucesso!...", user_result)
         } catch (err) {
-            //console.log(err.message)
+            console.log(err)
             return ResponseHelper.getErrorResponse("A Informação não foi Salva")
         }
     }
