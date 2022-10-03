@@ -29,11 +29,13 @@ class PortalNoticiaController {
      */
     async index({ request, response }) {
         try {
-            const noticias = await PortalNoticia.query().where({ estado: 1 })
-                // .with('noticiaItem')
-                .limit(10)
-                .orderBy("id", "desc")
-                .fetch()
+            let data = request.all();
+            let page = data.page ? data.page : 1;
+            let pagesize = data.pagesize ? data.pagesize : 10;
+
+
+            const noticias = await PortalNoticia.query().where({ estado: 1 }).orderBy('id', 'desc').paginate(page, 6)
+
             return ResponseHelper.getOnlyDataResponse(noticias)
         } catch (err) {
             console.error(err)
@@ -45,6 +47,7 @@ class PortalNoticiaController {
         try {
             let data = request.all();
             let page = data.page ? data.page : 1;
+            let pagesize = data.pagesize ? data.pagesize : 10;
             const result = await PortalNoticia.query().where({ estado: 1 }).orderBy('id', 'desc').paginate(page, 6)
             //  this.registarLog('', '', 'produtos', 'visualizar', '', '', 'visitante')
 
@@ -73,7 +76,7 @@ class PortalNoticiaController {
         try {
 
             const noticia = await PortalNoticia.query().where({ id: params.id }).with('PortalNoticiaItem').first()
-            
+
             await PortalNoticia.query().where({ id: params.id }).update({ visualizacoes: Number(noticia.visualizacoes) + Number(1) })
             return ResponseHelper.getOnlyDataResponse(noticia);
 
